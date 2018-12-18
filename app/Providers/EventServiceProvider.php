@@ -20,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\GameStarted' => [
             'App\Listeners\SendGameStartedNotification'
+        ],
+        'App\Events\GetUserInteraction' => [
+            'App\Listeners\RegisterInteraction'
+        ],
+        'App\Events\GameEnded' => [
+            'App\Listeners\SendGameEndedNotification'
         ]
     ];
 
