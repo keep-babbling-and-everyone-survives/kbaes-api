@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GameStarted;
 use Illuminate\Http\Request;
 
 class WebInterface extends Controller
@@ -15,5 +16,10 @@ class WebInterface extends Controller
     public function index()
     {
 
+    }
+
+    public function startGame($game)
+    {
+        event(new GameStarted($game));
     }
 }
