@@ -27,6 +27,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+        Passport::tokensCan([
+            'web-scope' => 'Access API from web interface',
+            'raspberry-scope' => 'Access API from raspberry interface',
+        ]);
+        Passport::enableImplicitGrant();
         //
     }
 }

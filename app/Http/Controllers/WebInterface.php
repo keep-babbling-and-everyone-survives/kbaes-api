@@ -14,6 +14,6 @@ class WebInterface extends Controller
      */
     public function index()
     {
-        var_dump('hello');
+
     }
 }

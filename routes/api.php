@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/web-interface', function () {
+    $query = http_build_query([
+        'client_id' => 1,
+        'response_type' => 'token'
+    ]);
+
+    return redirect('/oauth/authorize?'.$query);
+});

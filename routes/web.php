@@ -20,6 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/web-interface', 'WebInterface@index');
-Route::get('/raspberry-interface', 'RaspberryInterface@index');
+Route::get('/web-interface', 'WebInterface@index')->middleware('client:web-scope');
+Route::get('/raspberry-interface', 'RaspberryInterface@index')->middleware('client:raspberry-scope');
 
