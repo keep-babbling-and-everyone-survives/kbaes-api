@@ -18,8 +18,3 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-Route::get('/web-interface/{game}', 'WebInterface@startGame')->middleware('client:web-scope');
-Route::get('/raspberry-interface', 'RaspberryInterface@index')->middleware('client:raspberry-scope');
-
