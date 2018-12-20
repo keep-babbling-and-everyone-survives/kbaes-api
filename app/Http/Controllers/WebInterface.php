@@ -22,4 +22,9 @@ class WebInterface extends Controller
     {
         event(new GameStarted($game));
     }
+
+    public function startGameStatic()
+    {
+        event(new GameStarted(1));
+    }
 }
