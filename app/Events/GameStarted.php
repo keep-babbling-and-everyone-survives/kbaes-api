@@ -25,7 +25,7 @@ class GameStarted implements ShouldBroadcast
     public function __construct($game)
     {
         $this->game = $game;
-        $this->gameInfos = array('object1' => 'coucou', 'object2' => 'value2');
+        $this->gameInfos = array('source' => 'laravel', 'gameId' => $game);
     }
 
     /**

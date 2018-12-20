@@ -17,9 +17,12 @@
                     You are logged in!
                 </div>
 
-                <example-component />
             </div>
         </div>
     </div>
+    <div class="row justify-content-center">
+        <example-component />
+    </div>
 </div>
 @endsection
+
