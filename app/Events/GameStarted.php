@@ -10,11 +10,12 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class GameStarted
+class GameStarted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $game;
+    public $gameInfos;
     /**
      * Create a new event instance.
      *
@@ -24,7 +25,7 @@ class GameStarted
     public function __construct($game)
     {
         $this->game = $game;
-        var_dump('Game Started');
+        $this->gameInfos = array('source' => 'laravel', 'gameId' => $game);
     }
 
     /**
@@ -34,6 +35,6 @@ class GameStarted
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('newgame.4');
     }
 }
