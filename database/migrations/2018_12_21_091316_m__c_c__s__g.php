@@ -18,6 +18,7 @@ class MCCSG extends Migration
             $table->unsignedInteger('id_m_cc_s');
             $table->unsignedInteger('id_game');
             $table->tinyInteger('solved');
+            $table->tinyInteger('correct');
 
             $table->foreign('id_m_cc_s')->references('id')->on('m_cc_s');
             $table->foreign('id_game')->references('id')->on('game');
