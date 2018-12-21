@@ -33,9 +33,12 @@ class RuleSetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $combination)
     {
-        //
+        $rule_set = New Rule_Set();
+        $rule_set->combination = $combination;
+
+        $rule_set->save();
     }
 
     /**
@@ -78,8 +81,8 @@ class RuleSetController extends Controller
      * @param  \App\Rule_Set  $rule_Set
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rule_Set $rule_Set)
+    public function destroy(Rule_Set $rule_set)
     {
-        //
+        $rule_set->delete();
     }
 }

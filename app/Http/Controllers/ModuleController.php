@@ -24,7 +24,6 @@ class ModuleController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -33,9 +32,16 @@ class ModuleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $name, $analog, $rmin, $rmax)
     {
-        //
+
+        $module = New Module();
+        $module->name = $name;
+        $module->analog = $analog;
+        $module->range_min = $rmin;
+        $module->range_max = $rmax;
+
+        $module->save();
     }
 
     /**
@@ -80,6 +86,6 @@ class ModuleController extends Controller
      */
     public function destroy(Module $module)
     {
-        //
+        $module->delete();
     }
 }

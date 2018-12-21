@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Board;
+use App\Game;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -32,9 +34,11 @@ class GameController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Board $board)
     {
-        //
+        $game = new Game();
+        $game->id_board = $board->id;
+        $game->save();
     }
 
     /**
@@ -77,8 +81,8 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Game $game)
     {
-        //
+        $game->delete();
     }
 }

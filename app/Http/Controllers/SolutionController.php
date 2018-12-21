@@ -33,9 +33,12 @@ class SolutionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $response)
     {
-        //
+        $solution = new Solution();
+        $solution->response = $response;
+
+        $solution->save();
     }
 
     /**
@@ -80,6 +83,6 @@ class SolutionController extends Controller
      */
     public function destroy(Solution $solution)
     {
-        //
+        $solution->delete();
     }
 }

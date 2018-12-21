@@ -35,7 +35,9 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $board = new Board;
+        $board->created_at = now();
+        $board->save();
     }
 
     /**
@@ -46,7 +48,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        //
+
     }
 
     /**
@@ -80,6 +82,6 @@ class BoardController extends Controller
      */
     public function destroy(Board $board)
     {
-        //
+        $board->delete();
     }
 }

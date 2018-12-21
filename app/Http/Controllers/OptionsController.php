@@ -33,9 +33,12 @@ class OptionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $name)
     {
-        //
+        $option = New Options();
+        $option->name = $name;
+
+        $option->save();
     }
 
     /**
@@ -80,6 +83,6 @@ class OptionsController extends Controller
      */
     public function destroy(Options $options)
     {
-        //
+        $options->delete();
     }
 }
