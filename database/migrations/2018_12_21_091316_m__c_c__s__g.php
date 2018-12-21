@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class GO extends Migration
+class MCCSG extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class GO extends Migration
      */
     public function up()
     {
-        Schema::create('G_O', function (Blueprint $table) {
+        Schema::create('M_CC_S_G', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('id_m_cc_s');
             $table->unsignedInteger('id_game');
-            $table->unsignedInteger('id_option');
-            $table->string('value', 255);
+            $table->tinyInteger('solved');
 
-            $table->foreign('id_game')->references('id')->on('Game');
-            $table->foreign('id_option')->references('id')->on('Option');
+            $table->foreign('id_m_cc_s')->references('id')->on('m_cc_s');
+            $table->foreign('id_game')->references('id')->on('game');
         });
     }
 
@@ -31,6 +31,6 @@ class GO extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('G_O');
+        Schema::dropIfExists('M_CC_S_G');
     }
 }

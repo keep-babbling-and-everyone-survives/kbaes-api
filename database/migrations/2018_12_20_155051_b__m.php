@@ -15,7 +15,6 @@ class BM extends Migration
     {
         Schema::create('B_M', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedInteger('id_board');
             $table->unsignedInteger('id_module');
 

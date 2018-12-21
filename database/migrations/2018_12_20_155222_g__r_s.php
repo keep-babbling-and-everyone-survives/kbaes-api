@@ -15,7 +15,6 @@ class GRS extends Migration
     {
         Schema::create('G_RS', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedInteger('id_game');
             $table->unsignedInteger('id_rule_set');
 

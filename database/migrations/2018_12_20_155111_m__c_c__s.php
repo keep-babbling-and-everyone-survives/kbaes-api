@@ -15,7 +15,6 @@ class MCCS extends Migration
     {
         Schema::create('M_CC_S', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->unsignedInteger('id_module');
             $table->unsignedInteger('id_solution');
             $table->unsignedInteger('id_rule_set');
