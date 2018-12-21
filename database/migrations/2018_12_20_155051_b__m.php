@@ -13,13 +13,13 @@ class BM extends Migration
      */
     public function up()
     {
-        Schema::create('B_M', function (Blueprint $table) {
+        Schema::create('b_m', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_board');
             $table->unsignedInteger('id_module');
 
-            $table->foreign('id_board')->references('id')->on('Board');
-            $table->foreign('id_module')->references('id')->on('Module');
+            $table->foreign('id_board')->references('id')->on('board');
+            $table->foreign('id_module')->references('id')->on('module');
         });
     }
 
@@ -30,6 +30,6 @@ class BM extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('B_M');
+        Schema::dropIfExists('b_m');
     }
 }

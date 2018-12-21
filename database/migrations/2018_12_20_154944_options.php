@@ -13,7 +13,7 @@ class Options extends Migration
      */
     public function up()
     {
-        Schema::create('Options', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->string('name', 255);
@@ -27,6 +27,6 @@ class Options extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Options');
+        Schema::dropIfExists('options');
     }
 }

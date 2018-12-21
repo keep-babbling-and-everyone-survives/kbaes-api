@@ -13,7 +13,7 @@ class Module extends Migration
      */
     public function up()
     {
-        Schema::create('Module', function (Blueprint $table) {
+        Schema::create('module', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->string('name', 255);
@@ -30,6 +30,6 @@ class Module extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Module');
+        Schema::dropIfExists('module');
     }
 }

@@ -13,12 +13,12 @@ class Game extends Migration
      */
     public function up()
     {
-        Schema::create('Game', function (Blueprint $table) {
+        Schema::create('game', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->unsignedInteger('id_board');
 
-            $table->foreign('id_board')->references('id')->on('Board');
+            $table->foreign('id_board')->references('id')->on('board');
         });
     }
 
@@ -29,6 +29,6 @@ class Game extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Game');
+        Schema::dropIfExists('game');
     }
 }

@@ -13,15 +13,15 @@ class MCCS extends Migration
      */
     public function up()
     {
-        Schema::create('M_CC_S', function (Blueprint $table) {
+        Schema::create('m_cc_s', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_module');
             $table->unsignedInteger('id_solution');
             $table->unsignedInteger('id_rule_set');
 
-            $table->foreign('id_module')->references('id')->on('Module');
-            $table->foreign('id_solution')->references('id')->on('Solution');
-            $table->foreign('id_rule_set')->references('id')->on('Rule_Set');
+            $table->foreign('id_module')->references('id')->on('module');
+            $table->foreign('id_solution')->references('id')->on('solution');
+            $table->foreign('id_rule_set')->references('id')->on('rule_set');
         });
     }
 
@@ -32,6 +32,6 @@ class MCCS extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('M_CC_S');
+        Schema::dropIfExists('m_cc_s');
     }
 }

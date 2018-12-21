@@ -13,7 +13,7 @@ class MCCSG extends Migration
      */
     public function up()
     {
-        Schema::create('M_CC_S_G', function (Blueprint $table) {
+        Schema::create('m_cc_s_g', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_m_cc_s');
             $table->unsignedInteger('id_game');
@@ -31,6 +31,6 @@ class MCCSG extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('M_CC_S_G');
+        Schema::dropIfExists('m_cc_s_g');
     }
 }
