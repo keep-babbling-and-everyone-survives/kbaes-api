@@ -20,7 +20,7 @@ class GO extends Migration
             $table->string('value', 255);
 
             $table->foreign('id_game')->references('id')->on('game');
-            $table->foreign('id_option')->references('id')->on('option');
+            $table->foreign('id_option')->references('id')->on('options');
         });
     }
 
