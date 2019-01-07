@@ -17,6 +17,7 @@ class Game extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->unsignedInteger('id_board');
+            $table->string('status', 255);
 
             $table->foreign('id_board')->references('id')->on('board');
         });

@@ -13,6 +13,6 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-
+        'status', 'id_board'
     ];
 }

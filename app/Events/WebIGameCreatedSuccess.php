@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Game;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,24 +10,21 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class GameStarted implements ShouldBroadcast
+class WebIGameCreatedSuccess
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $game;
-    public $gameInfos;
+
+    private $game_ID;
     /**
      * Create a new event instance.
      *
-     * @param $game
      * @return void
      */
-    public function __construct()
+    public function __construct($game_ID)
     {
-        $this->game = new Game();
-        $this->gameInfos = array('source' => 'laravel', 'gameId' => $this->game->id);
-
-        event(new RaspberryRequestNewGame());
+        $this->game_ID = $game_ID;
+        //send notification of game created success
     }
 
     /**
@@ -38,6 +34,6 @@ class GameStarted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('newgame.4');
+        return new PrivateChannel('game.' . $this->game_ID);
     }
 }

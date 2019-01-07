@@ -21,3 +21,5 @@ Route::get('/web-interface/{game}', 'WebInterface@startGame');
 Route::get('/game/start', 'WebInterface@startGameStatic');
 Route::get('/game/start/{id}', 'WebInterface@startGame');
 Route::get('/raspberry-interface', 'RaspberryInterface@index')->middleware('client:raspberry-scope');
+
+Route::post('/get-raspberry-game-created/{id}', 'GameController@gameCreationSuccess');

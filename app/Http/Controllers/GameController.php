@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Board;
+use App\Events\WebIGameCreatedSuccess;
 use App\Game;
 use Illuminate\Http\Request;
 
@@ -32,15 +33,24 @@ class GameController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function store(Request $request, Board $board)
+    public function store(Request $request)
     {
         $game = new Game();
-        $game->id_board = $board->id;
+        $game->status = 'pending';
+        //$game->id_board = $request->board_id;
         $game->save();
+
+        return array('channel_id' =>$game->id);
     }
 
+
+    public function gameCreationSuccess($game_ID)
+    {
+        DB::table('game')->where('id', $game_ID)->update(['status' => 'launched']);
+        event(new WebIGameCreatedSuccess($game_ID));
+    }
     /**
      * Display the specified resource.
      *
