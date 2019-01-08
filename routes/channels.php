@@ -19,6 +19,6 @@ Broadcast::channel('game.{gameId}', function ($user, $gameId) {
     return true;
 });
 
-Broadcast::channel('raspberry.{id}', function($user, $id) {
+Broadcast::channel('board.{id}', function($user, $id) {
     return true;
 });

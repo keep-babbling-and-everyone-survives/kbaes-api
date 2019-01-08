@@ -20,6 +20,7 @@ class RaspberryRequestNewGame implements ShouldBroadcast
      * @var App\Game
      */
     public $game;
+    private $boardId;
 
     /**
      * Create a new event instance.
@@ -29,6 +30,7 @@ class RaspberryRequestNewGame implements ShouldBroadcast
     public function __construct(\App\Game $game)
     {
         $this->game = $game;
+        $this->boardId = 1;
     }
 
     /**
@@ -38,6 +40,6 @@ class RaspberryRequestNewGame implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('raspberry.0');
+        return new PrivateChannel("board.$this->boardId");
     }
 }
