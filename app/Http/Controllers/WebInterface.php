@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\GameStarted;
 use App\Game;
 use Illuminate\Http\Request;
+use App\Events\RaspberryRequestNewGame;
 
 class WebInterface extends Controller
 {
@@ -19,14 +20,16 @@ class WebInterface extends Controller
 
     }
 
-    public function startGame($game)
+    public function startGame(Request $request)
     {
-        $new_game = new Game();
-        event(new GameStarted($new_game));
-    }
+        $game = new Game();
+        $game->status = 'pending';
+        $game->id_board = 1;
+        //$game->id_board = $request->board_id;
+        $game->save();
 
-    public function startGameStatic()
-    {
-        event(new GameStarted(1));
+        event(new RaspberryRequestNewGame($game));
+
+        return array('channel_id' => $game->id);
     }
 }

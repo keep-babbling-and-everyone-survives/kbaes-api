@@ -10,18 +10,25 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class RaspberryRequestNewGame
+class RaspberryRequestNewGame implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    /**
+     * Current game
+     *
+     * @var App\Game
+     */
+    public $game;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Game $game)
     {
-        //send notification of new game request to raspberry
+        $this->game = $game;
     }
 
     /**
@@ -31,6 +38,6 @@ class RaspberryRequestNewGame
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel('raspberry.0');
     }
 }
