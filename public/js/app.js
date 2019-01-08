@@ -19121,7 +19121,13 @@ window.io = __webpack_require__(58);
 if (typeof io !== 'undefined') {
   window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
     broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
+    host: window.location.hostname + ':6001',
+    transports: ['websocket', 'polling', 'flashsocket'],
+    auth: {
+      headers: {
+        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImIwMGYxOTc2MjI0Mjg1YzM2ZjAyZTFiMWJhMGI4YTUxMjI2MTNjZWE5YzBjM2IxM2ZlMGVjYmQ3MzdkZWVkNmNkZjc0MzdkYmZjZDUwMTRjIn0.eyJhdWQiOiIyIiwianRpIjoiYjAwZjE5NzYyMjQyODVjMzZmMDJlMWIxYmEwYjhhNTEyMjYxM2NlYTljMGMzYjEzZmUwZWNiZDczN2RlZWQ2Y2RmNzQzN2RiZmNkNTAxNGMiLCJpYXQiOjE1NDY5NDU5OTMsIm5iZiI6MTU0Njk0NTk5MywiZXhwIjoxNTc4NDgxOTkzLCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.JGHe8qMEzsMK2-y9lB-PmRtOWH5T2neFdh36ZnHdjLUufSsSWw-lUbQbSKyuYJJ59ItAVfkGklP83l7hy0IuvxhwgS65V90JrqF_BZtjVE6zYlRfls_yKSHOkGR07RNHYEuf-1YOcELZJsJqFL30bPGorvPuWeTWcMm37HDLGslbgiU1FLrMUptjId9poT0Ri_NKJ4VaB9p2amEgownU1nuFDmfFGtBaVtR7e6HM_o14cvAqfsOoxOjYqsUTDTfMmiUbq-QtUmt8C0nAwxoW0wMr9Yvk1EfH_qcz_psQHe1OA3wmwLVwIvgx573SvbVcF_JgnXa3w8UL4qo9F4ineGPSpvO3_7_wKHglq6l0mIh5oa4rDCuO626Vjv7lGnepJ7qnKSPFHq0SMucXT0tBr_yGJCt3XAtpPLQOxcV_dpkOlh9G9rvdeJqXQQEQkMQBtyV-Rh1hrDsAUW8WuDjnWifAilpHQzZb4Xscd-eFJ6vGeaxYGF9N1dnmwjqR1vHkRHRgWkE4X_xB90IZLDO0arIK0jQfVJIh7pOShn0W_dHuR2nzGM-ZLe7BRAxNCsS6GhqVEs01Y40MJL_9266f99tNq1RRe3OHNWAu1hApJFn4R67gXII4PcWIGFDDaPW2Uei81xqfymcW5gEyiMYRHWqbxuRK6swhprArfZ0VYac'
+      }
+    }
   });
 }
 
@@ -57221,7 +57227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         console.log("mounted");
-        Echo.private("newgame.4").listen('GameStarted', function (e) {
+        Echo.private("game.4").listen('GameStarted', function (e) {
             console.log(e);
         });
     }

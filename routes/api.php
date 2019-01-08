@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/web-interface/{game}', 'WebInterface@startGame');
 Route::get('/raspberry-interface', 'RaspberryInterface@index')->middleware('client:raspberry-scope');
 
+Route::get('/game/send/{id}', function($id) {
+    event(new App\Events\GameStarted($id));
+});
 
 Route::post('/game/start/', 'WebInterface@startGame');
 Route::post('/get-raspberry-game-created/{id}', 'GameController@gameCreationSuccess');

@@ -15,20 +15,18 @@ class GameStarted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $game;
-    public $gameInfos;
+    private $id;
+    public $message = "Hello, je suis un message";
+
     /**
      * Create a new event instance.
      *
      * @param $game
      * @return void
      */
-    public function __construct()
+    public function __construct($id)
     {
-        $this->game = new Game();
-        $this->gameInfos = array('source' => 'laravel', 'gameId' => $this->game->id);
-
-        event(new RaspberryRequestNewGame());
+        $this->id = $id;
     }
 
     /**
@@ -38,6 +36,6 @@ class GameStarted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('newgame.4');
+        return new PrivateChannel('game.'.$this->id);
     }
 }

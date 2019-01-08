@@ -16,7 +16,7 @@
 export default {
     mounted() {
       console.log("mounted");
-        Echo.private(`newgame.4`)
+        Echo.private(`game.4`)
         .listen('GameStarted', (e) => {
             console.log(e);
         });
