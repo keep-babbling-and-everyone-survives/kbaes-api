@@ -29,7 +29,11 @@ class RaspberryRequestNewGame implements ShouldBroadcast
      */
     public function __construct(\App\Game $game)
     {
-        $this->game = $game;
+        $this->game = [
+            'status' => $game->status,
+            'id' => $game->id,
+            'id_board' => $game->id_board
+        ];
         $this->boardId = 1;
     }
 
