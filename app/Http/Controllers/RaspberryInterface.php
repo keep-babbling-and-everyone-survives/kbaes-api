@@ -3,8 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Game;
+use App\Events\Website\GameCreatedSuccess;
+use App\Events\Raspberry\GameplayUpdate;
 
 class RaspberryInterface extends Controller
 {
-    //
+    public function confirmGame(Request $req, $id)
+    {
+        try {
+            $game = Game::findOrFail($id);
+        }
+        catch (ModelNotFoundException $ex) {
+            return response()->json([
+                "error" => "The requested game does not exists. Check your admin panel."
+            ], 404);
+        }
+
+        $game->status = "running";
+        $game->save();
+
+        event(new GameCreatedSuccess($game));
+        
+
+        $nextModule = $this->createModule();
+        event(new GameplayUpdate($game, $nextRuleset));
+    }
+
+    private function initRuleSet() {
+        
+    }
 }

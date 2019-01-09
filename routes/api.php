@@ -25,4 +25,4 @@ Route::get('/game/send/{id}', function($id) {
 });
 
 Route::post('/game/start/', 'WebInterface@startGame');
-Route::post('/get-raspberry-game-created/{id}', 'GameController@gameCreationSuccess');
+Route::post('/game/confirm/{id}', 'RaspberryInterface@confirmGame');
