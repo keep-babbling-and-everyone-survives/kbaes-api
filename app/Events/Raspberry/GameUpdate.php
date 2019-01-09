@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Raspberry;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -10,21 +10,25 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class WebIGameCreatedSuccess
+class GameUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
-    private $game_ID;
+    private $game;
+    public $ruleset;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($game_ID)
+    public function __construct(App\Game $game, App\Rule_Set $ruleset)
     {
-        $this->game_ID = $game_ID;
-        //send notification of game created success
+        $this->game = [
+            "id" => $game->id,
+            "status" => $game->status,
+            "board" => $game->id_board,
+        ];
+        $this->ruleset = $ruleset;
     }
 
     /**
@@ -34,6 +38,6 @@ class WebIGameCreatedSuccess
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('game.' . $this->game_ID);
+        return new PrivateChannel("board.".$this->game["board"]);
     }
 }

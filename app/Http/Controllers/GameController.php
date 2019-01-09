@@ -52,12 +52,6 @@ class GameController extends Controller
         return array('channel_id' =>$game->id);
     }
 
-
-    public function gameCreationSuccess($game_ID)
-    {
-        DB::table('game')->where('id', $game_ID)->update(['status' => 'launched']);
-        event(new WebIGameCreatedSuccess($game_ID));
-    }
     /**
      * Display the specified resource.
      *

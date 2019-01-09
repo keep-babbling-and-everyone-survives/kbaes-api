@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\GameStarted;
 use App\Game;
 use Illuminate\Http\Request;
-use App\Events\RaspberryRequestNewGame;
+use App\Events\Raspberry\RequestNewGame;
 
 class WebInterface extends Controller
 {
@@ -35,8 +34,8 @@ class WebInterface extends Controller
             $response["channel_id"] = $game->id;
             $response["status"] = $game->status;
             $httpCode = 200;
-            event(new RaspberryRequestNewGame($game));
-        } else if (count($game) === 0) {
+            event(new RequestNewGame($game));
+        } else if (count($game) == 0) {
             $game = new Game();
             $game->status = 'pending';
             $game->id_board = $boardId;
@@ -45,7 +44,7 @@ class WebInterface extends Controller
             $httpCode = 201;
             $response["channel_id"] = $game->id;
             $response["status"] = $game->status;
-            event(new RaspberryRequestNewGame($game));
+            event(new RequestNewGame($game));
         } else {
             $httpCode = 409;
             $response = [
