@@ -15,6 +15,8 @@ class Rule_Set extends Model
     }
 
     public function games() {
-        return $this->belongsToMany(Game::class, 'games_rule_sets', 'id_rule_set', 'id_game');
+        return $this->belongsToMany(Game::class, 'games_rule_sets', 'id_rule_set', 'id_game')
+            ->withPivot('solved')
+            ->withPivot('correct');
     }
 }
