@@ -21,7 +21,7 @@ class GameCreatedSuccess implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(App\Game $game)
+    public function __construct(App\Model\Game $game)
     {
         $this->game = ["game_id" => $game->id, "status" => $game->status];
         //send notification of game created success

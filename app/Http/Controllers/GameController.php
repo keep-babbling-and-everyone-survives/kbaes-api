@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Board;
+use App\Model\Board;
 use App\Events\WebIGameCreatedSuccess;
-use App\Game;
+use App\Model\Game;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

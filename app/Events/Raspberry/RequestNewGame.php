@@ -27,7 +27,7 @@ class RequestNewGame implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(\App\Game $game)
+    public function __construct(\App\Model\Game $game)
     {
         $this->game = [
             'status' => $game->status,

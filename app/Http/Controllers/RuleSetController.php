@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Rule_Set;
+use App\Model\Rule_Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Game;
+use App\Model\Game;
 use App\Events\Website\GameCreatedSuccess;
 use App\Events\Website\GameUpdate;
 use App\Events\Raspberry\GameUpdate as RaspberryGameUpdate;
-use App\Rule_Set;
+use App\Model\Rule_Set;
 
 class RaspberryInterface extends Controller
 {
