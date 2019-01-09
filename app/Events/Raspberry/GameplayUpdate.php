@@ -10,18 +10,24 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class GameplayUpdate
+class GameplayUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    private $game;
+    public $module;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(App\Game $game, App\Module $module)
     {
-        //
+        $this->game = [
+            "id" => $game->id,
+            "board" => $game->id_board,
+        ];
+        $this->module = $module;
     }
 
     /**
@@ -31,6 +37,6 @@ class GameplayUpdate
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PrivateChannel("board.".$this->game["board"]);
     }
 }

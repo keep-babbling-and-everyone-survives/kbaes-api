@@ -10,20 +10,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class GameCreatedSuccess
+class GameCreatedSuccess implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
 
-    private $game_ID;
+    public $game;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($game_ID)
+    public function __construct(App\Game $game)
     {
-        $this->game_ID = $game_ID;
+        $this->game = ["game_id" => $game->id, "status" => $game->status];
         //send notification of game created success
     }
 
@@ -34,6 +34,6 @@ class GameCreatedSuccess
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('game.' . $this->game_ID);
+        return new PrivateChannel('game.' . $this->game["game_id"]);
     }
 }
