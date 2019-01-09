@@ -15,6 +15,4 @@ class Game extends Model
     protected $fillable = [
         'status', 'id_board'
     ];
-
-    protected $table = "game";
 }
