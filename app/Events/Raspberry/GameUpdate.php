@@ -10,24 +10,25 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class GameplayUpdate implements ShouldBroadcast
+class GameUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private $game;
-    public $module;
+    public $ruleset;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(App\Game $game, App\Module $module)
+    public function __construct(App\Game $game, App\Rule_Set $ruleset)
     {
         $this->game = [
             "id" => $game->id,
+            "status" => $game->status,
             "board" => $game->id_board,
         ];
-        $this->module = $module;
+        $this->ruleset = $ruleset;
     }
 
     /**
