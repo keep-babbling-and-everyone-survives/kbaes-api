@@ -35,13 +35,7 @@ class RuleSetController extends Controller
      */
     public function store(Request $request)
     {
-        $rule_set = New Rule_Set();
-        $rule_set->combination = 13;
-
-        $module = new Module();
-        $solution = new Solution();
-
-        $rule_set->save();
+        //
     }
 
     /**

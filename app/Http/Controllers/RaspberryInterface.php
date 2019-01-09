@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Game;
 use App\Events\Website\GameCreatedSuccess;
-use App\Events\Raspberry\GameplayUpdate;
+use App\Events\Website\GameUpdate;
+use App\Events\Raspberry\GameUpdate as RaspberryGameUpdate;
+use App\Rule_Set;
 
 class RaspberryInterface extends Controller
 {
@@ -25,13 +27,13 @@ class RaspberryInterface extends Controller
         $game->save();
 
         event(new GameCreatedSuccess($game));
-        
 
-        $nextModule = $this->createModule();
-        event(new GameplayUpdate($game, $nextRuleset));
+        $nextRuleset = $this->initRuleSet();
+        event(new RaspberryGameUpdate($game, $nextRuleset));
+        event(new GameUpdate($game, $nextRuleset));
     }
 
     private function initRuleSet() {
-        
+        return new Rule_Set();
     }
 }
