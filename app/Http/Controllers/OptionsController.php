@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Options;
+use App\Model\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -39,7 +39,7 @@ class OptionsController extends Controller
      */
     public function store(Request $request)
     {
-        $option = New Options();
+        $option = New Option();
         $option->name = $request->name;
 
         $option->save();
