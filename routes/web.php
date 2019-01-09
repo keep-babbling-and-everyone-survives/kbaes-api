@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
 Auth::routes();
@@ -20,6 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->prefix('admin')->group(function() {
+
+    Route::get('/','GameController@index')->name('admin-panel');
 
     //BOARD
     Route::get('boards', 'BoardController@index');
