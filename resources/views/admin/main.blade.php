@@ -42,7 +42,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('admin/modules') }}">Modules</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/solutions') }}">Solutions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/rule-sets') }}">Rule sets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/options') }}">Options</a>
+                    </li>
 
                 </ul>
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Rule_Set;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class RuleSetController extends Controller
 {
@@ -14,7 +16,8 @@ class RuleSetController extends Controller
      */
     public function index()
     {
-        //
+        $rule_sets = DB::table('rule_sets')->get();
+        return view('admin.rule-sets.rule-sets', ['rule_sets' => $rule_sets]);
     }
 
     /**
@@ -24,7 +27,7 @@ class RuleSetController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.rule-sets.new-rule-set');
     }
 
     /**
@@ -33,12 +36,36 @@ class RuleSetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $combination)
+    public function store(Request $request)
     {
         $rule_set = New Rule_Set();
-        $rule_set->combination = $combination;
+        $combination = '';
+        if(!empty($request->led_1)) {
+            $combination .= $request->led_1;
+        } else {
+            $combination .= '0';
+        }
+        if(!empty($request->led_2)) {
+            $combination .= $request->led_2;
+        } else {
+            $combination .= '0';
+        }
+        if(!empty($request->led_3)) {
+            $combination .= $request->led_3;
+        } else {
+            $combination .= '0';
+        }
+        if(!empty($request->led_4)) {
+            $combination .= $request->led_4;
+        } else {
+            $combination .= '0';
+        }
+        $rule_set->combination = bindec($combination);
 
         $rule_set->save();
+
+
+        return Redirect::to('/admin/rule-sets');
     }
 
     /**
@@ -81,8 +108,9 @@ class RuleSetController extends Controller
      * @param  \App\Rule_Set  $rule_Set
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rule_Set $rule_set)
+    public function destroy($id)
     {
-        $rule_set->delete();
+        DB::table('rule_sets')->where('id', $id)->delete();
+        return Redirect::to('/admin/rule-sets');
     }
 }

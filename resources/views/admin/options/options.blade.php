@@ -1,7 +1,7 @@
 @extends('admin.main')
 @section('content')
     <div class="container">
-        <a class="btn btn-primary my-3" href="{{ url('admin/create-board') }}">Créer un nouveau board</a>
+        <a class="btn btn-primary my-3" href="{{ url('admin/create-option') }}">Créer une nouvelle option</a>
         <table class="table">
             <thead>
             <tr>
@@ -11,13 +11,13 @@
 
             </thead>
             <tbody>
-            @foreach($boards as $board)
+            @foreach($options as $option)
 
                 <tr>
 
-                    <td>{{ $board->id }}</td>
-                    <td>Board n°{{ $board->id }}</td>
-                    <td><a href="{{ url('admin/delete-board/' . $board->id) }}">Supprimer le board</a> </td>
+                    <td>{{ $option->id }}</td>
+                    <td>{{ $option->name }}</td>
+                    <td><a href="{{ url('admin/delete-option/' . $option->id) }}">Supprimer l'option</a> </td>
 
                 </tr>
             @endforeach

@@ -6,6 +6,7 @@ use App\Board;
 use App\Events\WebIGameCreatedSuccess;
 use App\Game;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
 {
@@ -16,7 +17,13 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        $games = DB::table('games')
+            ->leftJoin('games_rule_sets AS grs', 'games.id', '=', 'grs.id_game')
+            ->leftJoin('rule_sets AS rs', 'grs.id_rule_set', '=', 'rs.id')
+            ->select('games.*', 'rs.combination')
+            ->get();
+
+        return view('admin.games.games', ['games' => $games]);
     }
 
     /**
@@ -91,8 +98,9 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+    public function destroy($id)
     {
-        $game->delete();
+        DB::table('games')->where('id', $id)->delete();
+        return Redirect::to('/admin/games');
     }
 }

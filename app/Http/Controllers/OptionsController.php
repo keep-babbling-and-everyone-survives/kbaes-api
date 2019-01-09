@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Options;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class OptionsController extends Controller
 {
@@ -14,7 +16,8 @@ class OptionsController extends Controller
      */
     public function index()
     {
-        //
+        $options = DB::table('options')->get();
+        return view('admin.options.options', ['options' => $options]);
     }
 
     /**
@@ -24,7 +27,8 @@ class OptionsController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('admin.options.new-option');
     }
 
     /**
@@ -33,12 +37,13 @@ class OptionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $name)
+    public function store(Request $request)
     {
         $option = New Options();
-        $option->name = $name;
+        $option->name = $request->name;
 
         $option->save();
+        return Redirect::to('/admin/options');
     }
 
     /**
@@ -81,8 +86,10 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Options $options)
+    public function destroy($id)
     {
-        $options->delete();
+
+        DB::table('options')->where('id', $id)->delete();
+        return Redirect::to('/admin/options');
     }
 }

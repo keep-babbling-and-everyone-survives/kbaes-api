@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class ModuleController extends Controller
 {
@@ -48,9 +49,8 @@ class ModuleController extends Controller
         }
 
         $module->save();
-        $modules = DB::table('modules')->get();
 
-        return view('admin.modules.modules', ['modules' => $modules]);
+        return Redirect::to('/admin/modules');
     }
 
     /**
@@ -97,7 +97,6 @@ class ModuleController extends Controller
     {
 
         DB::table('modules')->where('id', $id)->delete();
-        $modules = DB::table('modules')->get();
-        return view('admin.modules.modules', ['modules' => $modules]);
+        return Redirect::to('/admin/modules');
     }
 }

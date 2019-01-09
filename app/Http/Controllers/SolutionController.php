@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Solution;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class SolutionController extends Controller
 {
@@ -14,7 +16,8 @@ class SolutionController extends Controller
      */
     public function index()
     {
-        //
+        $solutions = DB::table('solutions')->get();
+        return view('admin.solutions.solutions', ['solutions' => $solutions]);
     }
 
     /**
@@ -24,7 +27,7 @@ class SolutionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.solutions.new-solution');
     }
 
     /**
@@ -33,12 +36,20 @@ class SolutionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $response)
+    public function store(Request $request)
     {
         $solution = new Solution();
-        $solution->response = $response;
+        if(!empty($request->response)) {
+            $solution->response = $request->response;
+        } else {
+            $solution->response = 0;
+        }
+
 
         $solution->save();
+
+
+        return Redirect::to('/admin/solutions');
     }
 
     /**
@@ -81,8 +92,10 @@ class SolutionController extends Controller
      * @param  \App\Solution  $solution
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Solution $solution)
+    public function destroy($id)
     {
-        $solution->delete();
+
+        DB::table('solutions')->where('id', $id)->delete();
+        return Redirect::to('/admin/solutions');
     }
 }

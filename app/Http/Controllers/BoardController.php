@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Board;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class BoardController extends Controller
 {
@@ -60,7 +61,6 @@ class BoardController extends Controller
     {
 
         DB::table('boards')->where('id', $id)->delete();
-        $boards = DB::table('boards')->get();
-        return view('admin.boards.boards', ['boards' => $boards]);
+        return Redirect::to('/admin/boards');
     }
 }
