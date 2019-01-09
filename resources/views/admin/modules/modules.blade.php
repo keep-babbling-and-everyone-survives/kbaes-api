@@ -7,6 +7,9 @@
             <tr>
                 <th>#</th>
                 <th>Titre</th>
+                <th>Range min</th>
+                <th>Range max</th>
+                <th>Analogue</th>
                 <th></th>
 
             </thead>
@@ -16,7 +19,16 @@
                 <tr>
 
                     <td>{{ $module->id }}</td>
-                    <td><a href="{{ url('admin/module/' . $module->id) }}">module n°{{ $module->id }}</a></td>
+                    <td>{{ $module->name }}</td>
+                    <td>{{ $module->range_min }}</td>
+                    <td>{{ $module->range_max }}</td>
+                    <td>
+                        @if($module->is_analog)
+                            <i class="fas fa-check"></i>
+                        @else
+                            <i class="fas fa-times"></i>
+                        @endif
+                    </td>
                     <td><a href="{{ url('admin/delete-module/' . $module->id) }}">Supprimer le module</a> </td>
 
                 </tr>

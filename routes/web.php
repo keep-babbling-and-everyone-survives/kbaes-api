@@ -31,7 +31,8 @@ Route::middleware('auth')->prefix('admin')->group(function() {
     //MODULE
     Route::get('modules', 'ModuleController@index');
     Route::get('module/{id}', 'ModuleController@show');
-    Route::get('create-module', 'ModuleController@store');
+    Route::get('create-module', 'ModuleController@create');
+    Route::post('create-module', 'ModuleController@store');
     Route::post('update-module/{id}', 'ModuleController@update');
     Route::get('delete-module/{id}', 'ModuleController@destroy');
 
