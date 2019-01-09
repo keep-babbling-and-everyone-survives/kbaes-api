@@ -33,10 +33,13 @@ class RuleSetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $combination)
+    public function store(Request $request)
     {
         $rule_set = New Rule_Set();
-        $rule_set->combination = $combination;
+        $rule_set->combination = 13;
+
+        $module = new Module();
+        $solution = new Solution();
 
         $rule_set->save();
     }
