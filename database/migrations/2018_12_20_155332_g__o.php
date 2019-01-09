@@ -13,13 +13,13 @@ class GO extends Migration
      */
     public function up()
     {
-        Schema::create('g_o', function (Blueprint $table) {
+        Schema::create('games_options', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_game');
             $table->unsignedInteger('id_option');
             $table->string('value', 255);
 
-            $table->foreign('id_game')->references('id')->on('game');
+            $table->foreign('id_game')->references('id')->on('games');
             $table->foreign('id_option')->references('id')->on('options');
         });
     }
@@ -31,6 +31,6 @@ class GO extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('g_o');
+        Schema::dropIfExists('games_options');
     }
 }

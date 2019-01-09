@@ -13,7 +13,7 @@ class Board extends Migration
      */
     public function up()
     {
-        Schema::create('board', function (Blueprint $table) {
+        Schema::create('boards', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
 
@@ -27,6 +27,6 @@ class Board extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('board');
+        Schema::dropIfExists('boards');
     }
 }

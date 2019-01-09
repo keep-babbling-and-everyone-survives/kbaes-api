@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ModuleController extends Controller
 {
@@ -14,7 +15,8 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        //
+        $modules = DB::table('modules')->get();
+        return view('admin.modules.modules', ['modules' => $modules]);
     }
 
     /**
@@ -84,8 +86,11 @@ class ModuleController extends Controller
      * @param  \App\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Module $module)
+    public function destroy($id)
     {
-        $module->delete();
+
+        DB::table('modules')->where('id', $id)->delete();
+        $modules = DB::table('modules')->get();
+        return view('admin.modules.modules', ['modules' => $modules]);
     }
 }

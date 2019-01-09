@@ -23,7 +23,6 @@ class WebInterface extends Controller
     public function startGame(Request $request)
     {
         $boardId = 1;
-        $httpCode = 0;
         $response = [];
 
         $game = Game::where('id_board', $boardId)
@@ -31,13 +30,13 @@ class WebInterface extends Controller
             ->orWhere('status', 'like', 'running')
             ->get();
 
-        if (count($game) == 1) {
+        if (count($game) === 1) {
             $game = $game[0];
             $response["channel_id"] = $game->id;
             $response["status"] = $game->status;
             $httpCode = 200;
             event(new RaspberryRequestNewGame($game));
-        } else if (count($game) == 0) {
+        } else if (count($game) === 0) {
             $game = new Game();
             $game->status = 'pending';
             $game->id_board = $boardId;
