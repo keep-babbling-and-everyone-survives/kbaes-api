@@ -24,5 +24,5 @@ Route::get('/game/send/{id}', function($id) {
     event(new App\Events\GameStarted($id));
 });
 
-Route::post('/game/start/', 'WebInterface@startGame');
+Route::post('/game/start/', 'WebInterface@startGame')->middleware('auth:api');
 Route::post('/game/confirm/{id}', 'RaspberryInterface@confirmGame');

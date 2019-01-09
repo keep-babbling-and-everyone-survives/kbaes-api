@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Game;
 use Illuminate\Http\Request;
 use App\Events\Raspberry\RequestNewGame;
+use Illuminate\Support\Facades\Auth;
 
 class WebInterface extends Controller
 {
@@ -37,6 +38,7 @@ class WebInterface extends Controller
             event(new RequestNewGame($game));
         } else if (count($game) == 0) {
             $game = new Game();
+            $game->user()->associate(Auth::user());
             $game->status = 'pending';
             $game->id_board = $boardId;
             $game->save();
