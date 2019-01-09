@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Board;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BoardController extends Controller
 {
@@ -14,18 +15,10 @@ class BoardController extends Controller
      */
     public function index()
     {
-        //
+        $boards = DB::table('boards')->get();
+        return view('admin.boards.boards', ['boards' => $boards]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,6 +31,8 @@ class BoardController extends Controller
         $board = new Board;
         $board->created_at = now();
         $board->save();
+        $boards = DB::table('boards')->get();
+        return view('admin.boards.boards', ['boards' => $boards]);
     }
 
     /**
@@ -46,33 +41,14 @@ class BoardController extends Controller
      * @param  \App\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function show(Board $board)
+    public function show($id)
     {
+        $board = DB::table('boards')->where('id', $id)->first();
+        return view('admin.boards.board', ['boards' => $board]);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Board  $board
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Board $board)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Board  $board
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Board $board)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -80,8 +56,11 @@ class BoardController extends Controller
      * @param  \App\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Board $board)
+    public function destroy($id)
     {
-        $board->delete();
+
+        DB::table('boards')->where('id', $id)->delete();
+        $boards = DB::table('boards')->get();
+        return view('admin.boards.boards', ['boards' => $boards]);
     }
 }

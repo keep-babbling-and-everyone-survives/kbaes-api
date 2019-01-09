@@ -13,7 +13,7 @@ class Solution extends Migration
      */
     public function up()
     {
-        Schema::create('solution', function (Blueprint $table) {
+        Schema::create('solutions', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->integer('response');
@@ -27,6 +27,6 @@ class Solution extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solution');
+        Schema::dropIfExists('solutions');
     }
 }

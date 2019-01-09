@@ -13,13 +13,13 @@ class GRS extends Migration
      */
     public function up()
     {
-        Schema::create('g_rs', function (Blueprint $table) {
+        Schema::create('games_rule_sets', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('id_game');
             $table->unsignedInteger('id_rule_set');
 
-            $table->foreign('id_game')->references('id')->on('game');
-            $table->foreign('id_rule_set')->references('id')->on('rule_set');
+            $table->foreign('id_game')->references('id')->on('games');
+            $table->foreign('id_rule_set')->references('id')->on('rule_sets');
 
         });
     }
@@ -31,6 +31,6 @@ class GRS extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('g_rs');
+        Schema::dropIfExists('games_rule_sets');
     }
 }

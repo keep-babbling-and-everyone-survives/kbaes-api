@@ -13,7 +13,7 @@ class RuleSet extends Migration
      */
     public function up()
     {
-        Schema::create('rule_set', function (Blueprint $table) {
+        Schema::create('rule_sets', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->integer('combination');
@@ -27,6 +27,6 @@ class RuleSet extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rule_set');
+        Schema::dropIfExists('rule_sets');
     }
 }

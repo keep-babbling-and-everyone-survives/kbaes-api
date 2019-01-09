@@ -22,7 +22,6 @@ class WebInterface extends Controller
     public function startGame(Request $request)
     {
         $boardId = 1;
-        $httpCode = 0;
         $response = [];
 
         $game = Game::where('id_board', $boardId)
@@ -30,7 +29,7 @@ class WebInterface extends Controller
             ->orWhere('status', 'like', 'running')
             ->get();
 
-        if (count($game) == 1) {
+        if (count($game) === 1) {
             $game = $game[0];
             $response["channel_id"] = $game->id;
             $response["status"] = $game->status;

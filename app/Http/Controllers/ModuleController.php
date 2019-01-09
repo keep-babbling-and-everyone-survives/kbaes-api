@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ModuleController extends Controller
 {
@@ -14,7 +15,8 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        //
+        $modules = DB::table('modules')->get();
+        return view('admin.modules.modules', ['modules' => $modules]);
     }
 
     /**
@@ -24,6 +26,7 @@ class ModuleController extends Controller
      */
     public function create()
     {
+        return view('admin.modules.new-module');
     }
 
     /**
@@ -32,16 +35,22 @@ class ModuleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $name, $analog, $rmin, $rmax)
+    public function store(Request $request)
     {
-
         $module = New Module();
-        $module->name = $name;
-        $module->analog = $analog;
-        $module->range_min = $rmin;
-        $module->range_max = $rmax;
+        $module->name = $request->name;
+        if(empty($request->is_analog)) {
+            $module->is_analog = 0;
+        } else {
+            $module->is_analog = 1;
+            $module->range_min = $request->rmin;
+            $module->range_max = $request->rmax;
+        }
 
         $module->save();
+        $modules = DB::table('modules')->get();
+
+        return view('admin.modules.modules', ['modules' => $modules]);
     }
 
     /**
@@ -84,8 +93,11 @@ class ModuleController extends Controller
      * @param  \App\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Module $module)
+    public function destroy($id)
     {
-        $module->delete();
+
+        DB::table('modules')->where('id', $id)->delete();
+        $modules = DB::table('modules')->get();
+        return view('admin.modules.modules', ['modules' => $modules]);
     }
 }
