@@ -10,7 +10,7 @@ class Rule_Set extends Model
 
     public function module()
     {
-        return $this->belongsToMany('App\Module', 'modules_rule_sets_solutions', 'id_rule_set', 'id_module')
+        return $this->belongsToMany(Module::class, 'modules_rule_sets_solutions', 'id_rule_set', 'id_module')
             ->using('App\modules_rule_sets_solution')->withPivot('id_solution');
     }
 
