@@ -16,7 +16,7 @@ class BoardController extends Controller
      */
     public function index()
     {
-        $boards = DB::table('boards')->get();
+        $boards = Board::All();
         return view('admin.boards.boards', ['boards' => $boards]);
     }
 
@@ -57,10 +57,9 @@ class BoardController extends Controller
      * @param  \App\Board  $board
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Board $board)
     {
-
-        DB::table('boards')->where('id', $id)->delete();
+        $board->delete();
         return Redirect::to('/admin/boards');
     }
 }

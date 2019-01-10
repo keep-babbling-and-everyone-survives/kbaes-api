@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>PIOSH</title>
+    <title>KBAES</title>
     <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Amatic+SC"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Helvetica"/>
     <!-- FONT AWESOME -->
@@ -27,8 +27,7 @@
 <div id="div_component">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="/">
-            <!--<img src="{{ asset('img/logo.jpg') }}" class="img-responsive">-->KBAES</a>
+            <a class="navbar-brand" href="/">KBAES</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -69,7 +68,6 @@
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-                                <a class="dropdown-item" href="{{ url('admin/articles') }}">Tous les articles</a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf

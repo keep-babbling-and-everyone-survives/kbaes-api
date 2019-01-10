@@ -16,7 +16,8 @@ class SolutionController extends Controller
      */
     public function index()
     {
-        $solutions = DB::table('solutions')->get();
+
+        $solutions = Solution::All();
         return view('admin.solutions.solutions', ['solutions' => $solutions]);
     }
 
@@ -92,10 +93,10 @@ class SolutionController extends Controller
      * @param  \App\Solution  $solution
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Solution $solution)
     {
+        $solution->delete();
 
-        DB::table('solutions')->where('id', $id)->delete();
         return Redirect::to('/admin/solutions');
     }
 }

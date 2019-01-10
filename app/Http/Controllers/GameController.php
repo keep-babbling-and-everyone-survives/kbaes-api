@@ -17,11 +17,8 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = DB::table('games')
-            ->leftJoin('games_rule_sets AS grs', 'games.id', '=', 'grs.id_game')
-            ->leftJoin('rule_sets AS rs', 'grs.id_rule_set', '=', 'rs.id')
-            ->select('games.*', 'rs.combination')
-            ->get();
+        $games = Game::All();
+
 
         return view('admin.games.games', ['games' => $games]);
     }
@@ -92,9 +89,9 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Game $game)
     {
-        DB::table('games')->where('id', $id)->delete();
+        $game->delete();
         return Redirect::to('/admin/games');
     }
 }

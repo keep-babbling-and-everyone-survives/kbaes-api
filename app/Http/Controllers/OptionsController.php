@@ -16,7 +16,8 @@ class OptionsController extends Controller
      */
     public function index()
     {
-        $options = DB::table('options')->get();
+
+        $options = Option::All();
         return view('admin.options.options', ['options' => $options]);
     }
 
@@ -52,7 +53,7 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function show(Options $options)
+    public function show(Option $options)
     {
         //
     }
@@ -63,7 +64,7 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function edit(Options $options)
+    public function edit(Option $options)
     {
         //
     }
@@ -75,7 +76,7 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Options $options)
+    public function update(Request $request, Option $options)
     {
         //
     }
@@ -86,10 +87,9 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Option $option)
     {
-
-        DB::table('options')->where('id', $id)->delete();
+        $option->delete();
         return Redirect::to('/admin/options');
     }
 }

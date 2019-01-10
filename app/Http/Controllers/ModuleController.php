@@ -16,7 +16,8 @@ class ModuleController extends Controller
      */
     public function index()
     {
-        $modules = DB::table('modules')->get();
+
+        $modules = Module::All();
         return view('admin.modules.modules', ['modules' => $modules]);
     }
 
@@ -93,10 +94,10 @@ class ModuleController extends Controller
      * @param  \App\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Module $module)
     {
 
-        DB::table('modules')->where('id', $id)->delete();
+        $module->delete();
         return Redirect::to('/admin/modules');
     }
 }

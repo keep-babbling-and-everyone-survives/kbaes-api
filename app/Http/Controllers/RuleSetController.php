@@ -16,7 +16,7 @@ class RuleSetController extends Controller
      */
     public function index()
     {
-        $rule_sets = DB::table('rule_sets')->get();
+        $rule_sets = Rule_Set::All();
         return view('admin.rule-sets.rule-sets', ['rule_sets' => $rule_sets]);
     }
 
@@ -108,9 +108,9 @@ class RuleSetController extends Controller
      * @param  \App\Rule_Set  $rule_Set
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Rule_Set $rule_Set)
     {
-        DB::table('rule_sets')->where('id', $id)->delete();
+        $rule_Set->delete();
         return Redirect::to('/admin/rule-sets');
     }
 }
