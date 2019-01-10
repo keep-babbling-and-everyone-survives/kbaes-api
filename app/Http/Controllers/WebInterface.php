@@ -6,6 +6,7 @@ use App\Model\Game;
 use Illuminate\Http\Request;
 use App\Events\Raspberry\RequestNewGame;
 use Illuminate\Support\Facades\Auth;
+use App\Events\Website\GameCreatedSuccess;
 
 class WebInterface extends Controller
 {
@@ -20,6 +21,7 @@ class WebInterface extends Controller
 
     }
 
+    // Route : /api/game/start
     public function startGame(Request $request)
     {
         $boardId = 1;
