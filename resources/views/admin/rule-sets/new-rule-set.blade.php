@@ -25,6 +25,22 @@
                 <input type="checkbox" class="custom-control-input" id="led_4" name="led_4" value="1">
                 <label class="custom-control-label" for="led_4">LED 4</label>
             </div>
+            <div class="form-group">
+                <select class="custom-select" name="id_module">
+                    <option selected disabled="disabled">Choisir un module</option>
+                    @foreach($modules as $module)
+                        <option value="{{ $module->id }}">{{ $module->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <select class="custom-select" name="id_solution">
+                    <option selected disabled="disabled">Choisir une solution</option>
+                    @foreach($solutions as $solution)
+                        <option value="{{ $solution->id }}">{{ $solution->response }}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <br>
             <input type="submit" class=" btn btn-primary">

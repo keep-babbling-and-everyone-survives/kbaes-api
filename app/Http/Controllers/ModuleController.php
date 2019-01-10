@@ -92,12 +92,11 @@ class ModuleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Module  $module
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Module $module)
+    public function destroy($id)
     {
-
-        $module->delete();
+        Module::destroy($id);
         return Redirect::to('/admin/modules');
     }
 }

@@ -7,6 +7,7 @@ use App\Events\WebIGameCreatedSuccess;
 use App\Model\Game;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class GameController extends Controller
 {
@@ -89,9 +90,9 @@ class GameController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+    public function destroy($id)
     {
-        $game->delete();
+        Game::destroy($id);
         return Redirect::to('/admin/games');
     }
 }

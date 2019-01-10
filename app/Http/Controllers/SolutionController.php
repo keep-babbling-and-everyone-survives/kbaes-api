@@ -93,9 +93,9 @@ class SolutionController extends Controller
      * @param  \App\Solution  $solution
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Solution $solution)
+    public function destroy($id)
     {
-        $solution->delete();
+        Solution::destroy($id);
 
         return Redirect::to('/admin/solutions');
     }

@@ -8,10 +8,10 @@ class Rule_Set extends Model
 {
     protected $table = "rule_sets";
 
-    public function module()
+    public function modules()
     {
         return $this->belongsToMany(Module::class, 'modules_rule_sets_solutions', 'id_rule_set', 'id_module')
-            ->using('App\modules_rule_sets_solution')->withPivot('id_solution');
+            ->using(modules_rule_sets_solution::class)->withPivot('id_solution');
     }
 
     public function games() {

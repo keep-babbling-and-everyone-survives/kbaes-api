@@ -54,5 +54,5 @@ Route::middleware('auth')->prefix('admin')->group(function() {
 
     //GAMES
     Route::get('games', 'GameController@index');
-    Route::get('delete-option/{id}', 'OptionsController@destroy');
+    Route::get('delete-game/{id}', 'GameController@destroy');
 });

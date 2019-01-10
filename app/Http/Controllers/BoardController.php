@@ -55,11 +55,11 @@ class BoardController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Board  $board
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Board $board)
+    public function destroy($id)
     {
-        $board->delete();
+        Board::destroy($id);
         return Redirect::to('/admin/boards');
     }
 }

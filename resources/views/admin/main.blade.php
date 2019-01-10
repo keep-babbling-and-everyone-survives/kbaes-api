@@ -36,6 +36,10 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin/games') }}">Games</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url('admin/boards') }}">Boards</a>
                     </li>
                     <li class="nav-item">

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Module;
 use App\Model\Rule_Set;
+use App\Model\Solution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -17,6 +19,8 @@ class RuleSetController extends Controller
     public function index()
     {
         $rule_sets = Rule_Set::All();
+
+
         return view('admin.rule-sets.rule-sets', ['rule_sets' => $rule_sets]);
     }
 
@@ -27,7 +31,10 @@ class RuleSetController extends Controller
      */
     public function create()
     {
-        return view('admin.rule-sets.new-rule-set');
+        $modules = Module::All();
+
+        $solutions = Solution::All();
+        return view('admin.rule-sets.new-rule-set',['modules' => $modules, 'solutions' => $solutions]);
     }
 
     /**
@@ -63,6 +70,8 @@ class RuleSetController extends Controller
         $rule_set->combination = bindec($combination);
 
         $rule_set->save();
+        $rule_set->modules()->attach($request->id_module, ['id_solution' => $request->id_solution]);
+
 
 
         return Redirect::to('/admin/rule-sets');

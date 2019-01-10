@@ -36,7 +36,7 @@ class OptionsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -87,9 +87,9 @@ class OptionsController extends Controller
      * @param  \App\Options  $options
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Option $option)
+    public function destroy($id)
     {
-        $option->delete();
+        Option::destroy($id);
         return Redirect::to('/admin/options');
     }
 }
