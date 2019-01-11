@@ -19,4 +19,17 @@ class Rule_Set extends Model
             ->withPivot('solved')
             ->withPivot('correct');
     }
+
+    public function modulesSummary() {
+        $usedModules = $this->modules;
+        $moduleCount = [];
+        foreach($usedModules as $m) {
+            if (array_key_exists($m->name, $moduleCount))
+                $moduleCount[$m->name]++;
+            else
+                $moduleCount[$m->name] = 1;
+        }
+
+       return $moduleCount;
+    }
 }

@@ -17,7 +17,7 @@ class RaspberryInterface extends Controller
 {
     private $gameLogics = new GameCourseBO;
 
-    // Route : /api/game/confirm/{id}
+    // Route : /api/game/{id}/confirm
     public function confirmGame(Request $req, $id)
     {
         try {
