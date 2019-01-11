@@ -7,55 +7,23 @@ use Illuminate\Http\Request;
 use App\Events\Raspberry\RequestNewGame;
 use Illuminate\Support\Facades\Auth;
 use App\Events\Website\GameCreatedSuccess;
+use App\BO\GameCourseBO;
 
 class WebInterface extends Controller
 {
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
+    private $gameLogics;
+    
+    public function __construct() {
+        $this->gameLogics = new GameCourseBO;
     }
 
-    // Route : /api/game/start
+    // POST /api/game/start
+    // Body : game_options: {}
     public function startGame(Request $request)
     {
-        $boardId = 1;
-        $response = [];
+        $launchResult = $this->gameLogics->startGame(1, $request->game_options);
 
-        $game = Game::where('id_board', $boardId)
-            ->where('status', 'like', 'pending')
-            ->orWhere('status', 'like', 'running')
-            ->get();
-
-        if (count($game) === 1) {
-            $game = $game[0];
-            $response["channel_id"] = $game->id;
-            $response["status"] = $game->status;
-            $httpCode = 200;
-            event(new RequestNewGame($game));
-        } else if (count($game) == 0) {
-            $game = new Game();
-            $game->user()->associate(Auth::user());
-            $game->status = 'pending';
-            $game->id_board = $boardId;
-            $game->save();
-
-            $httpCode = 201;
-            $response["channel_id"] = $game->id;
-            $response["status"] = $game->status;
-            event(new RequestNewGame($game));
-        } else {
-            $httpCode = 409;
-            $response = [
-                "Error" => "More than one game requested or running on the same board. Check your games and reset your board before trying again.",
-            ];
-        }
-
-        return response()->json($response, $httpCode);
+        return response()->json($launchResult["response"], $launchResult["status"]);
     }
 }
