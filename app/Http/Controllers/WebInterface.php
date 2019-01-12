@@ -12,6 +12,9 @@ use App\BO\GameCourseBO;
 class WebInterface extends Controller
 {
 
+    /**
+     * @var GameCourseBO
+     */
     private $gameLogics;
     
     public function __construct() {

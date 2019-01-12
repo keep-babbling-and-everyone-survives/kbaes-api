@@ -19,7 +19,10 @@ class GameCourseBO {
     {
         $boardId = 1;
         $response = [];
-        $options = [];
+        if (!isset($options['time']))
+            $options['time'] = "180";
+        if (!isset($options['modules']))
+            $options['modules'] = 3;
 
         $game = Game::where('id_board', $boardId)
             ->where('status', 'like', 'pending')
@@ -30,6 +33,7 @@ class GameCourseBO {
             $game = $game[0];
             $response["channel_id"] = $game->id;
             $response["status"] = $game->status;
+            $response["options"] = $game->getOptionsAsArray();
             $httpCode = 200;
             event(new RequestNewGame($game));
         } else if (count($game) == 0) {
@@ -39,11 +43,16 @@ class GameCourseBO {
             $game->id_board = $boardId;
             $game->save();
 
+            foreach($options as $key => $value) {
+                $game->setOption($key, $value);
+            }
+
             $this->initRuleSets($game);
 
             $httpCode = 201;
             $response["channel_id"] = $game->id;
             $response["status"] = $game->status;
+            $response["options"] = Game::find($game->id)->getOptionsAsArray();
             event(new RequestNewGame($game));
         } else {
             $httpCode = 409;
@@ -55,11 +64,11 @@ class GameCourseBO {
         return ["response" => $response, "status" => $httpCode];
     }
 
-    public function confirmGame(Game $game, $options = [])
+    public function confirmGame(Game $game)
     {
         if ($game->status !== "pending") {
             return [
-                "response" => [ "error" => "You can't confirm a running game.", ],
+                "response" => [ "error" => "You can't confirm an already running game.", ],
                 "status" => 409
             ];
         }
@@ -79,8 +88,8 @@ class GameCourseBO {
         ];
     }
 
-    private function initRuleSets(Game $game) {
-        $nofRulesets = 1; // $game->options[modules]
+    private function initRuleSets(Game &$game) {
+        $nofRulesets = $game->getOptionsAsArray()['modules'];
 
         $rulesets = Rule_Set::All();
         $availableRuleSets = [];
@@ -101,11 +110,12 @@ class GameCourseBO {
 
         if (count($availableRuleSets) < $nofRulesets) {
             $nofRulesets = count($availableRuleSets);
+            $game->setOption('modules', count($availableRuleSets));
         }
 
         $chosenRuleSets = [];
         for($i = 0; $i < $nofRulesets; $i++) {
-            $generated = $availableRuleSets[rand(0, count($availableRuleSets))];
+            $generated = $availableRuleSets[rand(0, count($availableRuleSets)-1)];
             while (in_array($generated, $chosenRuleSets)) {
                 $generated = $availableRuleSets[rand(0, count($availableRuleSets))];
             }

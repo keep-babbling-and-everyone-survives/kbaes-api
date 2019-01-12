@@ -43,12 +43,12 @@ class RequestNewGame implements ShouldBroadcast
                 }
             }
         }
-        
+
         $this->game = [
             'status' => $game->status,
             'id' => $game->id,
             'id_board' => $game->id_board,
-            'options' => [ 'time' => 180, "modules" => $game->rulesets->count() ],
+            'options' => $game->getOptionsAsArray(),
             'modules' => $usedModules
         ];
         $this->boardId = 1;

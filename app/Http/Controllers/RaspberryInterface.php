@@ -15,7 +15,11 @@ use App\Model\Module;
 
 class RaspberryInterface extends Controller
 {
-    private $gameLogics = new GameCourseBO;
+    private $gameLogics;
+
+    public function __construct() {
+        $this->gameLogics = new GameCourseBO;
+    }
 
     // Route : /api/game/{id}/confirm
     public function confirmGame(Request $req, $id)
