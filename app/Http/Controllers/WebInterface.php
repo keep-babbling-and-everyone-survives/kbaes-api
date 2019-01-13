@@ -22,7 +22,6 @@ class WebInterface extends Controller
     }
 
     // POST /api/game/start
-    // Body : game_options: {}
     public function startGame(Request $request)
     {
         $launchResult = $this->gameLogics->startGame(1, $request->game_options);
