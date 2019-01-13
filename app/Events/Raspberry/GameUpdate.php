@@ -21,7 +21,7 @@ class GameUpdate implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(\App\Model\Game $game, \App\Model\Rule_Set $ruleset)
+    public function __construct(\App\Model\Game $game, \App\Model\Rule_Set $nextRuleset = null)
     {
         $this->game = [
             "id" => $game->id,

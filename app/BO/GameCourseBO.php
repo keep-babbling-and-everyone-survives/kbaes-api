@@ -64,28 +64,27 @@ class GameCourseBO {
         return ["response" => $response, "status" => $httpCode];
     }
 
+    /**
+     * Performs game confirmation and provide the next ruleset to be played by the board or an error code
+     *
+     * @param Game $game
+     * @return Rule_Set
+     */
     public function confirmGame(Game $game)
     {
-        if ($game->status !== "pending") {
-            return [
-                "response" => [ "error" => "You can't confirm an already running game.", ],
-                "status" => 409
-            ];
-        }
-
         $game->status = "running";
         $game->save();
 
         event(new GameCreatedSuccess($game));
 
-        $nextRuleset = $game->rulesets[0];
+        return $game->rulesets[0];
+    }
 
-        event(new RaspberryGameUpdate($game, $nextRuleset));
+    public function abortGame(Game $game) {
+        $game->status = "aborted";
+        $game->save();
 
-        return [
-            "response" => [ "channel_id" => $game->id, "status" => $game->status ],
-            "status" => 200
-        ];
+        event(new GameUpdate($game));
     }
 
     private function initRuleSets(Game &$game) {
