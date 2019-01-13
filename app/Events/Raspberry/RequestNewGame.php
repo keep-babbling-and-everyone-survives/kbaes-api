@@ -14,11 +14,6 @@ class RequestNewGame implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Current game
-     *
-     * @var App\Game
-     */
     public $game;
     private $boardId;
 
