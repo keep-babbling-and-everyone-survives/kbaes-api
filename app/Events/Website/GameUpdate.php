@@ -14,22 +14,24 @@ class GameUpdate
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $game;
-    public $ruleset;
+    public $game;
+    public $update;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(App\Model\Game $game, App\Model\Rule_Set $ruleset)
+    public function __construct(\App\Model\Game $game, $update = [])
     {
+        $game = \App\Model\Game::find($game->id);
         $this->game = [
             "id" => $game->id,
             "status" => $game->status,
+            "options" => $game->getOptionsAsArray(),
             "board" => $game->id_board,
         ];
-        $this->ruleset = $ruleset;
+        $this->update = $update;
     }
 
     /**

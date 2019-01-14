@@ -19,9 +19,6 @@ class MCCSG extends Migration
             $table->unsignedInteger('id_game');
             $table->tinyInteger('solved');
             $table->tinyInteger('correct');
-
-            $table->foreign('id_m_cc_s')->references('id')->on('modules_rule_sets_solutions');
-            $table->foreign('id_game')->references('id')->on('games');
         });
     }
 
