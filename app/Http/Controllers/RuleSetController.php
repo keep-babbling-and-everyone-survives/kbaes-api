@@ -70,7 +70,7 @@ class RuleSetController extends Controller
         $rule_set->combination = bindec($combination);
 
         $rule_set->save();
-        
+
         $count = 0;
         foreach($request->id_module as $id_module) {
             $rule_set->modules()->attach($id_module, ['id_solution' => $request->id_solution[$count]]);
