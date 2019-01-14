@@ -32,3 +32,5 @@ Route::get('/game/trigger/{id}', function ($id) {
     $game->id=$id;
     event(new App\Events\Website\GameCreatedSuccess($game));
 });
+
+Route::get('/gameBoardModule/{id}', 'WebInterface@getRuleSets');
