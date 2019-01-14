@@ -35,8 +35,9 @@ class GameCourseBO {
             $response["status"] = $game->status;
             $response["options"] = $game->getOptionsAsArray();
             $httpCode = 200;
-            event(new RequestNewGame($game));
-        } else if (count($game) == 0) {
+            if ($game->status === 'pending')
+                event(new RequestNewGame($game));
+        } else if (count($game) === 0) {
             $game = new Game();
             $game->user()->associate(Auth::user());
             $game->status = 'pending';
@@ -123,5 +124,38 @@ class GameCourseBO {
             array_push($chosenRuleSets, $generated);
             $game->rulesets()->attach($generated, ["solved" => false, "correct" => false,]);
         }
+    }
+
+    public function answerRuleset(Game &$game, $rsid, $answer) {
+        $currentRuleset = $game->rulesets()->where('id_rule_set', $rsid)->first();
+        $expectedSolution = array_map(function($a) { return ['name' => $a['name'], 'solution' => $a['solution']];}, $currentRuleset->modulesAsArray());
+
+        $rsIsCorrect = true;
+        for($i = 0; $i < count($expectedSolution); $i++) {
+            if (count(array_diff($expectedSolution[$i], $answer[$i])) !== 0) {
+                $rsIsCorrect = false;
+            }
+        }
+
+        $game->rulesets()->updateExistingPivot($rsid, ["solved" => true, "correct" => $rsIsCorrect]);
+        
+        $nextRuleset = $game->rulesets()->where('solved', false)->first();
+
+        $hasNext = true;
+        if (is_null($nextRuleset)) {
+            $hasNext = false;
+            $game->status = "finished";
+            $game->save();
+        }
+
+        $update = [
+            "type" => "answer",
+            "answer" => $rsIsCorrect,
+            "hasNext" => $hasNext,
+        ];
+
+        event(new GameUpdate($game, $update));
+
+        return $hasNext ? $nextRuleset : null;
     }
 }

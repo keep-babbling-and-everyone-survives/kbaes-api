@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\RaspberryInterface;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ Route::get('/game/send/{id}', function($id) {
 
 Route::post('/game/start/', 'WebInterface@startGame')->middleware('auth:api');
 Route::post('/game/{id}/confirm', 'RaspberryInterface@confirmGame');
+Route::post('/game/{gameid}/answer/{rsid}', 'RaspberryInterface@answerRuleset');
+Route::get('/game/{id}/current', 'RaspberryInterface@requestCurrentRuleset');
 
 Route::get('/game/trigger/{id}', function ($id) {
     $game = new App\Model\Game();

@@ -35,7 +35,7 @@ class RaspberryInterface extends Controller
                 "error" => "The requested game does not exists. Check your admin panel."
             ], 404);
         }
-
+        
         if ($game->status === "pending") {
             $confirmation = $req->status;
 
@@ -45,6 +45,7 @@ class RaspberryInterface extends Controller
                     "game_id" => $game->id,
                     "game_status" => $game->status,
                     "next_ruleset" => [
+                        "id" => $nextRuleset->id,
                         "combination" => $nextRuleset->combination,
                         "modules" => $nextRuleset->modulesAsArray(),
                     ],
@@ -68,5 +69,72 @@ class RaspberryInterface extends Controller
         }
 
         return response()->json($updateStatus["response"], $updateStatus["status"]);
+    }
+
+    // POST /api/game/{gameid}/answer/{rsid}
+    public function answerRuleset(Request $req, $gameid, $rsid) {
+        try {
+            $game = Game::findOrFail($gameid);
+        } catch (ModelNotFoundException $ex) {
+            return response()->json([
+                "error" => "The requested game does not exists. Check your admin panel."
+            ], 404);
+        }
+
+        $updateStatus = [];
+
+        $nextRuleset = $this->gameLogics->answerRuleset($game, $rsid, $req->modules);
+        $isCorrect = $game->rulesets()->where('id_rule_set', $rsid)->first()->pivot->correct;
+
+        if (!is_null($nextRuleset)) {
+            $updateStatus = [
+                "response" => [
+                    "solved" => $isCorrect,
+                    "has_next" => true,
+                    "game_id" => $game->id,
+                    "game_status" => "running",
+                    "next_ruleset" => [
+                        "id" => $nextRuleset->id,
+                        "combination" => $nextRuleset->combination,
+                        "modules" => $nextRuleset->modulesAsArray(),
+                    ],
+                ],
+                "status" => 200,
+            ];
+        } else {
+            $updateStatus = [
+                "response" => [
+                    "solved" => $isCorrect,
+                    "has_next" => false,
+                    "game_id" => $game->id,
+                    "game_status" => "finished",
+                    "next_ruleset" => [],
+                ],
+                "status" => 200,
+            ];
+        }
+
+        return response()->json($updateStatus["response"], $updateStatus["status"]);
+    }
+
+    // GET /api/game/{id}/current
+    public function requestCurrentRuleset($id) {
+        try {
+            $game = Game::findOrFail($id);
+        } catch (ModelNotFoundException $ex) {
+            return response()->json([
+                "error" => "The requested game does not exists. Check your admin panel."
+            ], 404);
+        }
+
+        if ($game->status !== 'running') {
+            return response()->json([
+                "error" => "This game is not running. ($game->status)"
+            ], 409);
+        }
+
+        $currentRuleset = $game->rulesets[0]->toArray();
+
+        return response()->json(["ruleset" => $currentRuleset], 200);
     }
 }
