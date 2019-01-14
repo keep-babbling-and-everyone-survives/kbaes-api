@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\Website\GameUpdate;
 use App\Events\Website\GameCreatedSuccess;
 use App\Events\Raspberry\RequestNewGame;
+use App\Events\Raspberry\RequestGameHalt;
 use App\Events\Raspberry\GameUpdate as RaspberryGameUpdate;
 use App\Model\Game;
 use App\Model\Rule_Set;
@@ -81,11 +82,11 @@ class GameCourseBO {
         return $game->rulesets[0];
     }
 
-    public function abortGame(Game $game) {
+    public function abortGame(Game &$game) {
         $game->status = "aborted";
         $game->save();
 
-        event(new GameUpdate($game));
+        event(new RequestGameHalt($game));
     }
 
     private function initRuleSets(Game &$game) {

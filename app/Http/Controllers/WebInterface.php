@@ -52,6 +52,14 @@ class WebInterface extends Controller
         }
         return response()->json($availableRuleSets, 200);
     }
+
+    // GET /api/game/{id}/abort
+    public function abortGame($id) {
+        $game = Game::findOrFail($id);
+
+        $this->gameLogics->abortGame($game);
+
+    }
 }
 
 

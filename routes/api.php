@@ -23,6 +23,8 @@ Route::get('/game/send/{id}', function($id) {
 });
 
 Route::post('/game/start/', 'WebInterface@startGame')->middleware('auth:api');
+Route::get('/game/{id}/abort', 'WebInterface@abortGame');
+
 Route::post('/game/{id}/confirm', 'RaspberryInterface@confirmGame');
 Route::post('/game/{gameid}/answer/{rsid}', 'RaspberryInterface@answerRuleset');
 Route::get('/game/{id}/current', 'RaspberryInterface@requestCurrentRuleset');
