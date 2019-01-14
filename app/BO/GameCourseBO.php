@@ -114,9 +114,11 @@ class GameCourseBO {
 
         $chosenRuleSets = [];
         for($i = 0; $i < $nofRulesets; $i++) {
-            $generated = $availableRuleSets[rand(0, count($availableRuleSets)-1)];
+            $offset = rand(0, count($availableRuleSets)-1);
+            $generated = $availableRuleSets[$offset];
             while (in_array($generated, $chosenRuleSets)) {
-                $generated = $availableRuleSets[rand(0, count($availableRuleSets))];
+                $offset = rand(0, count($availableRuleSets)-1);
+                $generated = $availableRuleSets[$offset];
             }
             array_push($chosenRuleSets, $generated);
             $game->rulesets()->attach($generated, ["solved" => false, "correct" => false,]);
