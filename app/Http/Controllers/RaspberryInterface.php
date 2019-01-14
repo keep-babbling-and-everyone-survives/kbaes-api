@@ -133,8 +133,13 @@ class RaspberryInterface extends Controller
             ], 409);
         }
 
-        $currentRuleset = $game->rulesets[0]->toArray();
+        $c = $game->rulesets[0];
+        $currentRuleset = [
+            "id" => $c->id,
+            "combination" => $c->combination,
+            "modules" => $c->modulesAsArray(),
+        ];
 
-        return response()->json(["ruleset" => $currentRuleset], 200);
+        return response()->json([$currentRuleset], 200);
     }
 }
