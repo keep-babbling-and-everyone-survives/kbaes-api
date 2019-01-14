@@ -26,16 +26,16 @@
                 <label class="custom-control-label" for="led_4">LED 4</label>
             </div>
             <div class="form-group">
-                <select class="custom-select" name="id_module">
-                    <option selected disabled="disabled">Choisir un module</option>
+                <label for="id_module">Choisir un module</label>
+                <select class="custom-select" name="id_module[]" id="id_module" multiple="multiple">
                     @foreach($modules as $module)
                         <option value="{{ $module->id }}">{{ $module->name }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
-                <select class="custom-select" name="id_solution">
-                    <option selected disabled="disabled">Choisir une solution</option>
+                <label for="id_solution">Choisir une solution</label>
+                <select class="custom-select" name="id_solution[]" id="id_solution" multiple="multiple">
                     @foreach($solutions as $solution)
                         <option value="{{ $solution->id }}">{{ $solution->response }}</option>
                     @endforeach

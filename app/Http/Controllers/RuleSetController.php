@@ -70,8 +70,12 @@ class RuleSetController extends Controller
         $rule_set->combination = bindec($combination);
 
         $rule_set->save();
-        $rule_set->modules()->attach($request->id_module, ['id_solution' => $request->id_solution]);
-
+        
+        $count = 0;
+        foreach($request->id_module as $id_module) {
+            $rule_set->modules()->attach($id_module, ['id_solution' => $request->id_solution[$count]]);
+            $count++;
+        }
 
 
         return Redirect::to('/admin/rule-sets');
