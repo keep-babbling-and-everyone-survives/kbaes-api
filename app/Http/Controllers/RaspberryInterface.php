@@ -36,10 +36,6 @@ class RaspberryInterface extends Controller
             ], 404);
         }
 
-        // temp
-        $game->status = "pending";
-        $game->save();
-        
         if ($game->status === "pending") {
             $confirmation = $req->status;
 
