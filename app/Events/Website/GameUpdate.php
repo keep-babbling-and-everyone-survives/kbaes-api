@@ -41,6 +41,6 @@ class GameUpdate implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('game.'.$this->game->id);
+        return new PrivateChannel('game.'.$this->game["id"]);
     }
 }
