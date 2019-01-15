@@ -44,7 +44,7 @@ class WebInterface extends Controller
                     }
                 }
                 if ($rsIsAvailable) {
-                    $availableRuleSets['rule_sets']['rule_set_' . $rs->id] = array('combination' => $rs->combination, 'module' => $rs->modulesAsArray());
+                    array_push($availableRuleSets['rule_sets'], array('id' => $rs->id, 'combination' => $rs->combination, 'modules' => $rs->modulesAsArray()));
 
                 }
             }
