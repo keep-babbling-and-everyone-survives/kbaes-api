@@ -34,7 +34,6 @@ class WebInterface extends Controller
         $game = Game::find($id);
         $rulesets = Rule_Set::All();
         $availableRuleSets = [];
-        $availableRuleSets['rule_sets'] = array();
         foreach($rulesets as $rs) {
             $rsIsAvailable = false;
             foreach($rs->modules as $module) {
@@ -45,7 +44,7 @@ class WebInterface extends Controller
                 }
             }
             if ($rsIsAvailable) {
-                array_push($availableRuleSets['rule_sets'], array('id' => $rs->id, 'combination' => $rs->combinationToArray(4), 'modules' => $rs->modulesAsArray()));
+                array_push($availableRuleSets, array('id' => $rs->id, 'combination' => $rs->combinationToArray(4), 'modules' => $rs->modulesAsArray()));
             }
         }
 
