@@ -24,6 +24,8 @@ class GameCourseBO {
             $options['time'] = "180";
         if (!isset($options['modules']))
             $options['modules'] = 3;
+        if (!isset($options['errors']))
+            $options['errors'] = 3;
 
         $game = Game::where('id_board', $boardId)
             ->where('status', 'like', 'pending')
@@ -141,16 +143,27 @@ class GameCourseBO {
         $game->rulesets()->updateExistingPivot($rsid, ["solved" => true, "correct" => $rsIsCorrect]);
         
         $nextRuleset = $game->rulesets()->where('solved', false)->first();
+        $errors = $game->rulesets()->where('solved', true)->where('correct', false)->count();
 
         $hasNext = true;
+        $failed = false;
         if (is_null($nextRuleset)) {
             $hasNext = false;
+            $failed = false;
+            $game->status = "finished";
+            $game->save();
+        }
+
+        if ($errors >= $game->getOptionsAsArray()["errors"]) {
+            $hasNext = false;
+            $failed = true;
             $game->status = "finished";
             $game->save();
         }
 
         $update = [
             "type" => "answer",
+            "failed" => $failed,
             "answer" => $rsIsCorrect,
             "hasNext" => $hasNext,
         ];
