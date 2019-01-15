@@ -51,6 +51,20 @@ class WebInterface extends Controller
         return response()->json($availableRuleSets, 200);
     }
 
+    // GET /api/game/{id}
+    public function getGameStatus($id) {
+        $game = Game::findOrFail($id);
+        $resource = [
+            "id" => $id,
+            "status" => $game->status,
+            "modules" => $game->getOptionsAsArray()["modules"],
+            "solved" => $game->rulesets()->where('solved', true)->count(),
+            "errors" => $game->rulesets()->where('solved', true)->where('correct', false)->count(),
+        ];
+
+        return response()->json($resource);
+    }
+
     // GET /api/game/{id}/abort
     public function abortGame($id) {
         $game = Game::findOrFail($id);

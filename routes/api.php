@@ -24,6 +24,7 @@ Route::get('/game/send/{id}', function($id) {
 
 Route::post('/game/start/', 'WebInterface@startGame')->middleware('auth:api');
 Route::get('/game/{id}/abort', 'WebInterface@abortGame');
+Route::get('/game/{id}', "WebInterface@getGameStatus");
 
 Route::post('/game/{id}/confirm', 'RaspberryInterface@confirmGame');
 Route::post('/game/{gameid}/answer/{rsid}', 'RaspberryInterface@answerRuleset');
