@@ -166,6 +166,8 @@ class GameCourseBO {
             "failed" => $failed,
             "answer" => $rsIsCorrect,
             "hasNext" => $hasNext,
+            "errors" => $errors,
+            "solved" => $game->rulesets()->where('solved', true)->count(),
         ];
 
         event(new GameUpdate($game, $update));
