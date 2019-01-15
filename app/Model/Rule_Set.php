@@ -56,4 +56,13 @@ class Rule_Set extends Model
         }
         return $array;
     }
+
+    public function combinationToArray($len) {
+        $combination = $this->combination;
+        $output = [];
+        for ($i = 0; $i < $len; $i++) {
+            array_push($output, ($combination >> $i & 1));
+        }
+        return array_reverse($output);
+    }
 }
