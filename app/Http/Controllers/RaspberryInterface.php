@@ -85,6 +85,8 @@ class RaspberryInterface extends Controller
 
         $nextRuleset = $this->gameLogics->answerRuleset($game, $rsid, $req->modules);
         $isCorrect = $game->rulesets()->where('id_rule_set', $rsid)->first()->pivot->correct;
+        $errors = $game->rulesets()->where('solved', true)->where('correct', false)->count();
+        $failed = $errors >= $game->getOptionsAsArray()["errors"];
 
         if (!is_null($nextRuleset)) {
             $updateStatus = [
@@ -93,6 +95,7 @@ class RaspberryInterface extends Controller
                     "has_next" => true,
                     "game_id" => $game->id,
                     "game_status" => "running",
+                    "failed" => $failed,
                     "next_ruleset" => [
                         "id" => $nextRuleset->id,
                         "combination" => $nextRuleset->combination,
@@ -109,6 +112,7 @@ class RaspberryInterface extends Controller
                     "game_id" => $game->id,
                     "game_status" => "finished",
                     "next_ruleset" => [],
+                    "failed" => $failed,
                 ],
                 "status" => 200,
             ];
