@@ -157,7 +157,7 @@ class GameCourseBO {
         if ($errors >= $game->getOptionsAsArray()["errors"]) {
             $hasNext = false;
             $failed = true;
-            $game->status = "finished";
+            $game->status = "failed";
             $game->save();
         }
 
