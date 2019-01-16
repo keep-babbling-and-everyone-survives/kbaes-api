@@ -7,6 +7,7 @@
             <tr>
                 <th>#</th>
                 <th>Titre</th>
+                <th>Modules</th>
                 <th></th>
 
             </thead>
@@ -17,6 +18,16 @@
 
                     <td>{{ $board->id }}</td>
                     <td>Board n°{{ $board->id }}</td>
+                    <td>
+                        @foreach($board->modules as $module)
+
+                            @if ($loop->last)
+                                <a href="{{ url('admin/modules') }}">{{ $module->name . ' (n°' . $module->id . ')' }}</a>
+                            @else
+                                <a href="{{ url('admin/modules') }}">{{ $module->name . ' (n°' . $module->id . ')' . ',' }}</a>
+                            @endif
+                        @endforeach
+                    </td>
                     <td><a href="{{ url('admin/delete-board/' . $board->id) }}">Supprimer le board</a> </td>
 
                 </tr>

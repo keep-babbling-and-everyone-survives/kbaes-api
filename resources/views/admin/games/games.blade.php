@@ -18,7 +18,7 @@
 
                     <td>{{ $game->id }}</td>
                     <td>{{ $game->status }}</td>
-                    <td>Board n°{{ $game->id_board }}</td>
+                    <td><a href="{{ url('admin/boards') }}">Board n°{{ $game->id_board }}</a> </td>
                     <td>
                     @if (count($game->rulesets)>0)
                     {{ decbin($game->rulesets[0]->combination) }}

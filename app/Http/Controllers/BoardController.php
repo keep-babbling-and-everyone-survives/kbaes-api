@@ -17,6 +17,9 @@ class BoardController extends Controller
     public function index()
     {
         $boards = Board::All();
+        foreach($boards as $board) {
+            $board['modules'] = DB::table('boards_modules AS bm')->where('bm.id_board', $board['id'])->leftJoin('modules AS m', 'bm.id_module', '=', 'm.id')->get();
+        }
         return view('admin.boards.boards', ['boards' => $boards]);
     }
 
