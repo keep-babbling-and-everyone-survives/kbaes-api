@@ -146,4 +146,34 @@ class RaspberryInterface extends Controller
 
         return response()->json([$currentRuleset], 200);
     }
+
+    // GET /api/game/{id}/timesup
+    public function timesup(Request $req, $id) {
+        $game = Game::findOrFail($id);
+
+        $game->status = "failed";
+        $game->save();
+
+        $updateStatus = [
+            "response" => [
+                "solved" => 0,
+                "has_next" => false,
+                "game_id" => $game->id,
+                "game_status" => "failed",
+                "next_ruleset" => [],
+                "failed" => true,
+            ],
+            "status" => 200,
+        ];
+
+        $response = [
+            "id" => $game->id,
+            "status" => $game->status,
+            "board" => $game->id_board,
+        ];
+
+        event(new GameUpdate($game, $updateStatus));
+
+        return response()->json($response, 200);
+    }
 }

@@ -29,6 +29,7 @@ Route::get('/game/{id}', "WebInterface@getGameStatus");
 Route::post('/game/{id}/confirm', 'RaspberryInterface@confirmGame');
 Route::post('/game/{gameid}/answer/{rsid}', 'RaspberryInterface@answerRuleset');
 Route::get('/game/{id}/current', 'RaspberryInterface@requestCurrentRuleset');
+Route::post('/game/{id}/timesup', 'RaspberryInterface@timesup');
 
 Route::get('/game/trigger/{id}', function ($id) {
     $game = new App\Model\Game();
