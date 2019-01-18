@@ -56,3 +56,8 @@ Le GameCourseBO contient les logiques hors transferts HTTP pour alléger les con
 - ? __Board__ > /api/game/x/timesup
 - ? __Api__ > broadcast Website\GameUpdate
 
+## Utilisation
+
+https://github.com/keep-babbling-and-everyone-survives/kbaes-doc/wiki/API---Installer-le-server
+
+Publier l'app, transmettre l'ip dans les fichiers de configuration du site et du script embarqué dans le raspberry
