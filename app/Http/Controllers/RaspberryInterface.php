@@ -155,15 +155,12 @@ class RaspberryInterface extends Controller
         $game->save();
 
         $updateStatus = [
-            "response" => [
-                "solved" => 0,
-                "has_next" => false,
-                "game_id" => $game->id,
-                "game_status" => "failed",
-                "next_ruleset" => [],
-                "failed" => true,
-            ],
-            "status" => 200,
+            "solved" => 0,
+            "has_next" => false,
+            "game_id" => $game->id,
+            "game_status" => "failed",
+            "next_ruleset" => [],
+            "failed" => true,
         ];
 
         $response = [

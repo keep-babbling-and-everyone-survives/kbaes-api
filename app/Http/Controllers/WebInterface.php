@@ -54,10 +54,12 @@ class WebInterface extends Controller
     // GET /api/game/{id}
     public function getGameStatus($id) {
         $game = Game::findOrFail($id);
+        $options = $game->getOptionsAsArray();
         $resource = [
             "id" => $id,
             "status" => $game->status,
-            "modules" => $game->getOptionsAsArray()["modules"],
+            "modules" => $options["modules"],
+            "chances" => $options["errors"],
             "solved" => $game->rulesets()->where('solved', true)->count(),
             "errors" => $game->rulesets()->where('solved', true)->where('correct', false)->count(),
         ];
