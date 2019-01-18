@@ -15,6 +15,10 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('newgame.4', function () {
+Broadcast::channel('game.{gameId}', function ($user, $gameId) {
+    return true;
+});
+
+Broadcast::channel('board.{id}', function($user, $id) {
     return true;
 });

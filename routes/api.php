@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\RaspberryInterface;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/web-interface/{game}', 'WebInterface@startGame');
-Route::get('/game/start', 'WebInterface@startGameStatic');
-Route::get('/game/start/{id}', 'WebInterface@startGame');
-Route::get('/raspberry-interface', 'RaspberryInterface@index')->middleware('client:raspberry-scope');
+Route::get('/game/send/{id}', function($id) {
+    event(new App\Events\GameStarted($id));
+});
+
+Route::post('/game/start/', 'WebInterface@startGame')->middleware('auth:api');
+Route::get('/game/{id}/abort', 'WebInterface@abortGame');
+Route::get('/game/{id}', "WebInterface@getGameStatus");
+
+Route::post('/game/{id}/confirm', 'RaspberryInterface@confirmGame');
+Route::post('/game/{gameid}/answer/{rsid}', 'RaspberryInterface@answerRuleset');
+Route::get('/game/{id}/current', 'RaspberryInterface@requestCurrentRuleset');
+Route::post('/game/{id}/timesup', 'RaspberryInterface@timesup');
+
+Route::get('/game/trigger/{id}', function ($id) {
+    $game = new App\Model\Game();
+    $game->id=$id;
+    event(new App\Events\Website\GameCreatedSuccess($game));
+});
+
+Route::get('/gameBoardModule/{id}', 'WebInterface@getRuleSets');

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Model\Game;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,18 +15,18 @@ class GameStarted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $game;
-    public $gameInfos;
+    private $id;
+    public $message = "Hello, je suis un message";
+
     /**
      * Create a new event instance.
      *
      * @param $game
      * @return void
      */
-    public function __construct($game)
+    public function __construct($id)
     {
-        $this->game = $game;
-        $this->gameInfos = array('source' => 'laravel', 'gameId' => $game);
+        $this->id = $id;
     }
 
     /**
@@ -35,6 +36,6 @@ class GameStarted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('newgame.4');
+        return new PrivateChannel('game.'.$this->id);
     }
 }
