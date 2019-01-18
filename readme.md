@@ -29,8 +29,30 @@ Les webservices sont au coeur des logiques de gameplay du jeu. Les logiques sont
 
 WebInterface contient tous les endpoints utiles au site:
 
-- POST /game/start qui lance le jeu avec les options données en body
+- POST /game/start qui lance le jeu avec les options données en body __broadcast__ evrs la board
 - GET /game/{id} qui expose le status d'une partie (Les options, le score et l'état)
 - GET /game/{id}/abort qui interrompt une partie
 - GET /gameBoardModule/{gameid} qui expose la liste des rulesets potentiellement utilisés pour cette partie
+
+RaspberryInterface ceux utiles à la board (et à la course du jeu):
+
+- POST /game/{id}/confirm Confirme la bonne réception d'une demande de jeu. Donne l'acceptation sous forme de 'OK' ou 'KO' __broadcast__ vers le site
+- POST /game/{gameid}/answer/{rsid} Donne la réponse au couple jeu/ruleset auquel la board vient de répondre, renvoie le résultat de la réponse ainsi que la suite de la partie (has_next et next_ruleset si besoin) __broadcast__ vers le site
+- GET /game/{id}/current /unused/
+- POST /game/{id}/timesup Reçoit une notification de temps écoulé, __broadcast__ vers le site
+
+Le GameCourseBO contient les logiques hors transferts HTTP pour alléger les controlleurs, notemment l'attribution des rulesets à un jeu lors de sa création et la comparaison des réponses reçues et des réponses attendues.
+
+### Déroulé d'une partie
+
+- __website__ > /api/game/start (w/ options, res: game id)
+- __API__ > Broadcast Raspberry\RequestNewGame (w/ options)
+- __Board__ > /api/game/x/confirm (res: next ruleset)
+- __Api__ > Broadcast Website\GameCreatedSuccess
+- __Website__ > /api/gameBoardModule/x (res: Liste des rulesets potentiels)
+- __Board__ > /api/game/x/answer/y (w/ answer, res: next ruleset)
+- __Api__ > broadcast Website\GameUpdate (w/ results)
+- Répéter les deux dernières étapes jusqu'à la fin de la partie
+- ? __Board__ > /api/game/x/timesup
+- ? __Api__ > broadcast Website\GameUpdate
 
